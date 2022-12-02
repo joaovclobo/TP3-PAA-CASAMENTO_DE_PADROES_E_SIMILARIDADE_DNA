@@ -16,34 +16,20 @@ void cabecalhoMain(){
 |===============================================================================================================|\n\n");
 }
 
-int opcoesEncontraCaminho(){
+FILE* abreArquivo(char* nomeArquivo){
 
-    int escolhaUsuario;
+    FILE *fptr;
 
-    printf("\nEscolha uma das seguintes opções para encontrar o caminhos:\n\n\
-    1) - Utilizando uma função que usa \"Memorization\";\n\
-    2) - Utilizando uma função que usa Backtracking;\n\
-    3) - Utilizando uma função que usa Froça Bruta;\n\
-    4) - Encontrar e mostrar os caminhos (utilizando função que usa \"Memorization\");\n\
-    5) - Encontrar a numero de caminhos divisiveis por k (utilizando função que usa Força Bruta).\n");
-
-    scanf("%d", &escolhaUsuario);
-    return escolhaUsuario;
-}
-
-int opcoesImprimirCaminho(){
-    int option = 0;
-
-    printf("\nEscolha uma das seguintes opções para visualizar os caminhos mínimos:\n\n\
-    1) - Matriz caminho colorida\n\
-    2) - Matriz caminho representada com emojis\n\
-    3) - Forma tradicional: Coordenadas\n\
-    4) - Matriz de pesos colorida\n");
+    printf("\nAbrindo o arquivo: %s\n", nomeArquivo);
     
+    fptr = fopen(nomeArquivo, "r");
 
-    scanf("%d", &option);
+    if (fptr == NULL){
+        printf("\nERRO: Arquivo não encontrado!\nPor favor, insira um arquivo válido!\n");
+        return NULL;
 
-    return option;
+    } else{
+        return fptr;
 
-
+    }
 }
