@@ -1,5 +1,9 @@
 {
     "files.associations": {
-        "funcoesrelatorio.h": "c"
+        "funcoesrelatorio.h": "c",
+        "auxstrings.h": "c",
+        "relatorio.h": "c",
+        "similaridade.h": "c",
+        "type_traits": "c"
     }
 }
