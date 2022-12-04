@@ -14,16 +14,20 @@ int main(){
     time_t tempo;
     srand((time(&tempo)));
 
+        srand(2);
+
     //Variaveis de teste
         char* DNA = (char*) calloc(MAX_BUFFER, sizeof(char));
+                char* padrao = (char*) calloc(MIN_BUFFER, sizeof(char));
+
         int linhasLidas = 0;
 
-        tamPadrao = 4; numPadroes = 8;
+        tamPadrao = 2; numPadroes = 8;
 
     tamProdCartesiano = pow(4, tamPadrao);
 	char** prodCartesiano = geraProdCartesiano(tamPadrao, tamProdCartesiano);
 
-    printf("Produto cartesiano:\n");
+    printf("\nProduto cartesiano:\n");
     imprimeVetString(tamProdCartesiano, tamPadrao + 1, prodCartesiano);
 
     char** padroesSorteados = sorteiaPadroes(numPadroes, tamPadrao + 1, tamProdCartesiano, prodCartesiano);
@@ -31,11 +35,36 @@ int main(){
     printf("Padrões sorteados:\n");
     imprimeVetString(numPadroes, tamPadrao + 1, padroesSorteados);
 
-    long* vetorFreqA = (long*) calloc(numPadroes, sizeof(long));
-    long *vetorFreqB = (long*) calloc(numPadroes, sizeof(long));
+    char text[] = "AACCCTGAACCCTGAACCCTGAACCCTGAACCCTG";
 
-    imprimeVetLong(numPadroes, vetorFreqA);
-    imprimeVetLong(numPadroes, vetorFreqB);
+        strcpy(DNA, text);
+
+        long* vetorFreqA = (long*) calloc(numPadroes, sizeof(long));
+        // long *vetorFreqB = (long*) calloc(numPadroes, sizeof(long));
+
+        printf("\nTEXTO: %s \n", DNA);
+
+        for (int i = 0; i < numPadroes; i++){
+        
+        printf("PADRÃO - %s\n", padroesSorteados[i]);
+        // printf("\n%ld %d\n", strlen(DNA), tamPadrao);
+
+        printf("BMHS - ");
+        vetorFreqA[i] = BMHS(DNA, padroesSorteados[i]);
+        printf("REPS BMHS: %ld\n", vetorFreqA[i]);
+
+        printf("Shift AND - ");
+        vetorFreqA[i] = ShiftAnd(DNA, padroesSorteados[i]);
+        printf("REPS SHIFT - AND: %ld\n", vetorFreqA[i]);
+
+        printf("KMP - ");
+        vetorFreqA[i] = KMPAlgorithm(DNA, padroesSorteados[i]);
+        printf("REPS KMP: %ld\n\n", vetorFreqA[i]);
+        
+        }
+
+    // imprimeVetLong(numPadroes, vetorFreqA);
+    // imprimeVetLong(numPadroes, vetorFreqB);
 
 /*     cabecalhoMain();
 
@@ -81,3 +110,4 @@ int main(){
 */
     return 0;
 }
+
