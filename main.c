@@ -15,23 +15,27 @@ int main(){
     srand((time(&tempo)));
 
     //Variaveis de teste
-        char* DNA = (char*) calloc(100000, sizeof(char));
+        char* DNA = (char*) calloc(MAX_BUFFER, sizeof(char));
         int linhasLidas = 0;
 
-        tamPadrao = 3; numPadroes = 3;
+        tamPadrao = 4; numPadroes = 8;
 
-        char prodCartesiano[16][3] = {"AA", "AT", "AC", "AG", "TA", "TT", "TC", "TG", "CA", "CT", "CC", "CG", "GA", "GT", "GC", "GG"};
-
-    tamProdCartesiano = pow(4, tamPadrao - 1);
-	geraProdCartesiano(tamPadrao, tamProdCartesiano);
+    tamProdCartesiano = pow(4, tamPadrao);
+	char** prodCartesiano = geraProdCartesiano(tamPadrao, tamProdCartesiano);
 
     printf("Produto cartesiano:\n");
-    imprimeVetString(tamProdCartesiano, tamPadrao, prodCartesiano);
+    imprimeVetString(tamProdCartesiano, tamPadrao + 1, prodCartesiano);
 
-    // char** padroesSorteados = sorteiaPadroes(numPadroes, tamPadrao, tamProdCartesiano, prodCartesiano);
+    char** padroesSorteados = sorteiaPadroes(numPadroes, tamPadrao + 1, tamProdCartesiano, prodCartesiano);
 
-    // printf("Padrões sorteados:\n");
-    // imprimeVetStringDin(numPadroes, tamPadrao, padroesSorteados);
+    printf("Padrões sorteados:\n");
+    imprimeVetString(numPadroes, tamPadrao + 1, padroesSorteados);
+
+    long* vetorFreqA = (long*) calloc(numPadroes, sizeof(long));
+    long *vetorFreqB = (long*) calloc(numPadroes, sizeof(long));
+
+    imprimeVetLong(numPadroes, vetorFreqA);
+    imprimeVetLong(numPadroes, vetorFreqB);
 
 /*     cabecalhoMain();
 

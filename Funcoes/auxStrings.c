@@ -11,38 +11,41 @@ char** iniciaVetString(int tamVetor, int tamString){
     return vetor;
 }
 
-void imprimeVetString(int tamVetor, int tamString, char vetor[tamVetor][tamString]){
+void imprimeVetString(int tamVetor, int tamString, char** vetor){
 	for (int i = 0; i < tamVetor; i++){
 		printf("%s ", vetor[i]);
 	}
     putchar('\n');
 }
 
-void imprimeVetStringDin(int tamVetor, int tamString, char** vetor){
+void imprimeVetLong(long tamVetor, long* vetor){
 	for (int i = 0; i < tamVetor; i++){
-		printf("%s ", vetor[i]);
+		printf("%ld ", vetor[i]);
 	}
     putchar('\n');
 }
 
 //Funções importadas e adaptadas do GeeksforGeeks
 
-void geraProdCartesianoRecur (char *str, char* data, int last, int index){
+void geraProdCartesianoRecur (char *str, char* data, int last, int index, int* possProdCar, char** prodCartesiano){
 	int i, len = strlen(str);
 
 	for ( i=0; i<len; i++ )	{
 
 		data[index] = str[i] ;
 
-		if (index == last)
-			printf("%s ", data);
-		else 
-			geraProdCartesianoRecur (str, data, last, index+1);
+		if (index == last){
+            strcpy(prodCartesiano[*possProdCar], data);
+            (*possProdCar)++;
+        }
+		else{
+            geraProdCartesianoRecur (str, data, last, index+1, possProdCar, prodCartesiano);
+        }
 	}
 }
 
-void geraProdCartesiano(int tamPadrao, int tamProdCartesiano){
-	int len = tamPadrao - 1, tam;
+char** geraProdCartesiano(int tamPadrao, int tamProdCartesiano){
+	int len = tamPadrao, possProdCar = 0;
     char bases[] = "ATCG";
     char** prodCartesiano = iniciaVetString(tamProdCartesiano, tamPadrao);
         
@@ -51,11 +54,10 @@ void geraProdCartesiano(int tamPadrao, int tamProdCartesiano){
 
 	qsort(bases, len, sizeof(char), compare);
 
-	geraProdCartesianoRecur (bases, data, len-1, 0);
-
-                        putchar('\n');
+	geraProdCartesianoRecur (bases, data, len-1, 0, &possProdCar, prodCartesiano);
 
 	free(data);
+    return prodCartesiano;
 }
 
 int compare (const void * a, const void * b){

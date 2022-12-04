@@ -8,9 +8,9 @@
 #define MAX_PADROES 10
 
 char** iniciaVetString(int tamVetor, int tamString);
-void imprimeVetString(int tamVetor, int tamString, char vetor[tamVetor][tamString]);
-void imprimeVetStringDin(int tamVetor, int tamString, char** vetor);
+void imprimeVetString(int tamVetor, int tamString, char** vetor);
+void imprimeVetLong(long tamVetor, long* vetor);
 
 int compare (const void * a, const void * b);
-void geraProdCartesianoRecur (char *str, char* data, int last, int index);
-void geraProdCartesiano(int tamPadrao, int tamProdCartesiano);
+void geraProdCartesianoRecur (char *str, char* data, int last, int index, int* possProdCar, char** prodCartesiano);
+char** geraProdCartesiano(int tamPadrao, int tamProdCartesiano);
