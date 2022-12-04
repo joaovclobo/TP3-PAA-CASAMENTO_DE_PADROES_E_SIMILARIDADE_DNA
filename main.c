@@ -14,7 +14,7 @@ int main(){
     time_t tempo;
     srand((time(&tempo)));
 
-        srand(2);
+        srand(1);
 
     //Variaveis de teste
         char* DNA = (char*) calloc(MAX_BUFFER, sizeof(char));
@@ -22,7 +22,7 @@ int main(){
 
         int linhasLidas = 0;
 
-        tamPadrao = 2; numPadroes = 8;
+        tamPadrao = 2; numPadroes = 4;
 
     tamProdCartesiano = pow(4, tamPadrao);
 	char** prodCartesiano = geraProdCartesiano(tamPadrao, tamProdCartesiano);
@@ -35,36 +35,39 @@ int main(){
     printf("Padrões sorteados:\n");
     imprimeVetString(numPadroes, tamPadrao + 1, padroesSorteados);
 
-    char text[] = "AACCCTGAACCCTGAACCCTGAACCCTGAACCCTG";
-
-        strcpy(DNA, text);
+    FILE *fptrHuman = abreArquivo("./ArquivosDNA/human.txt");
+    begin = clock();
 
         long* vetorFreqA = (long*) calloc(numPadroes, sizeof(long));
-        // long *vetorFreqB = (long*) calloc(numPadroes, sizeof(long));
+        long* vetorFreqB = (long*) calloc(numPadroes, sizeof(long));
 
-        printf("\nTEXTO: %s \n", DNA);
+    while (!feof(fptrHuman)){
+        fscanf(fptrHuman, "%s", DNA);
+
+        // printf("\nTEXTO: %s \n", DNA);
 
         for (int i = 0; i < numPadroes; i++){
         
-        printf("PADRÃO - %s\n", padroesSorteados[i]);
-        // printf("\n%ld %d\n", strlen(DNA), tamPadrao);
+        // printf("PADRÃO - %s\n", padroesSorteados[i]);
 
-        printf("BMHS - ");
-        vetorFreqA[i] = BMHS(DNA, padroesSorteados[i]);
-        printf("REPS BMHS: %ld\n", vetorFreqA[i]);
+        // vetorFreqA[i] += BMHS(DNA, padroesSorteados[i]);
+        // vetorFreqA[i] += ShiftAnd(DNA, padroesSorteados[i]);
+        vetorFreqA[i] += KMPAlgorithm(DNA, padroesSorteados[i]);
 
-        printf("Shift AND - ");
-        vetorFreqA[i] = ShiftAnd(DNA, padroesSorteados[i]);
-        printf("REPS SHIFT - AND: %ld\n", vetorFreqA[i]);
-
-        printf("KMP - ");
-        vetorFreqA[i] = KMPAlgorithm(DNA, padroesSorteados[i]);
-        printf("REPS KMP: %ld\n\n", vetorFreqA[i]);
-        
         }
 
-    // imprimeVetLong(numPadroes, vetorFreqA);
-    // imprimeVetLong(numPadroes, vetorFreqB);
+        linhasLidas++;
+    }
+    printf("Vetor freqs A: ");
+    imprimeVetLong(numPadroes, vetorFreqA);
+    printf("Vetor freqs B: ");
+    imprimeVetLong(numPadroes, vetorFreqB);
+
+    end = clock();
+
+    mostraTempoGasto(end, begin);
+
+    printf("LINHAS LIDAS %d\n", linhasLidas); linhasLidas = 0;
 
 /*     cabecalhoMain();
 
