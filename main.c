@@ -2,6 +2,7 @@
 #include "./Funcoes/relatorio.h"
 #include "./Funcoes/similaridade.h"
 
+
 int main(){
 
     //Variaveis da main
@@ -23,55 +24,50 @@ int main(){
         int linhasLidas = 0;
 
         tamPadrao = 2; numPadroes = 4;
+    
+    cabecalhoMain();
 
+    //TODO - da pra melhorar
     tamProdCartesiano = pow(4, tamPadrao);
 	char** prodCartesiano = geraProdCartesiano(tamPadrao, tamProdCartesiano);
 
-    printf("\nProduto cartesiano:\n");
+    printf("\n\tProduto cartesiano:\t");
     imprimeVetString(tamProdCartesiano, tamPadrao + 1, prodCartesiano);
 
     char** padroesSorteados = sorteiaPadroes(numPadroes, tamPadrao + 1, tamProdCartesiano, prodCartesiano);
 
-    printf("Padrões sorteados:\n");
+    printf("\n\tPadrões sorteados:\t");
     imprimeVetString(numPadroes, tamPadrao + 1, padroesSorteados);
 
-    FILE *fptrHuman = abreArquivo("./ArquivosDNA/human.txt");
     begin = clock();
+    
 
-        long* vetorFreqA = (long*) calloc(numPadroes, sizeof(long));
-        long* vetorFreqB = (long*) calloc(numPadroes, sizeof(long));
+    FILE *fptrHuman = abreArquivo("./ArquivosDNA/human.txt");
+    long* freqsHuman = contaFrequenciasBHMS(fptrHuman, "Humano", numPadroes, padroesSorteados);
 
-    while (!feof(fptrHuman)){
-        fscanf(fptrHuman, "%s", DNA);
+    printf("\tVetor freqs Human: "); imprimeVetLong(numPadroes, freqsHuman); 
 
-        // printf("\nTEXTO: %s \n", DNA);
 
-        for (int i = 0; i < numPadroes; i++){
-        
-        // printf("PADRÃO - %s\n", padroesSorteados[i]);
+    FILE *fptrDog = abreArquivo("./ArquivosDNA/dog.txt");
+    long* freqsDog = contaFrequenciasBHMS(fptrDog, "Cachoro", numPadroes, padroesSorteados);
 
-        // vetorFreqA[i] += BMHS(DNA, padroesSorteados[i]);
-        // vetorFreqA[i] += ShiftAnd(DNA, padroesSorteados[i]);
-        vetorFreqA[i] += KMPAlgorithm(DNA, padroesSorteados[i]);
+    printf("\tVetor freqs Dog: "); imprimeVetLong(numPadroes, freqsDog); 
 
-        }
 
-        linhasLidas++;
-    }
-    printf("Vetor freqs A: ");
-    imprimeVetLong(numPadroes, vetorFreqA);
-    printf("Vetor freqs B: ");
-    imprimeVetLong(numPadroes, vetorFreqB);
+    FILE *fptrChimp = abreArquivo("./ArquivosDNA/chimpanzee.txt");
+    long* freqsChimp = contaFrequenciasBHMS(fptrChimp, "Chimpanzé", numPadroes, padroesSorteados);
+
+    printf("\tVetor freqs Chimpanzee: "); imprimeVetLong(numPadroes, freqsChimp); 
 
     end = clock();
 
     mostraTempoGasto(end, begin);
 
-    printf("LINHAS LIDAS %d\n", linhasLidas); linhasLidas = 0;
+    // printf("LINHAS LIDAS %d\n", linhasLidas); linhasLidas = 0;
 
-/*     cabecalhoMain();
+/*     
+    cabecalhoMain();
 
-    FILE *fptrHuman = abreArquivo("./ArquivosDNA/human.txt");
     begin = clock();
 
         while (!feof(fptrHuman)){fscanf(fptrHuman, "%s", DNA);linhasLidas++;}
@@ -82,7 +78,6 @@ int main(){
     
     printf("LINHAS LIDAS %d\n", linhasLidas); linhasLidas = 0;
 
-   FILE *fptrChimp = abreArquivo("./ArquivosDNA/chimpanzee.txt");
     begin = clock(); 
 
         while (!feof(fptrChimp)){fscanf(fptrChimp, "%s", DNA);linhasLidas++;}
@@ -93,7 +88,6 @@ int main(){
     printf("LINHAS LIDAS %d\n", linhasLidas); linhasLidas = 0; 
 
 
-    FILE *fptrDog = abreArquivo("./ArquivosDNA/dog.txt");
     begin = clock(); 
 
         for (int i = 0; i < 100000000; i++){
@@ -105,12 +99,12 @@ int main(){
 
     mostraTempoGasto(end, begin);
     printf("LINHAS LIDAS %d\n", linhasLidas); linhasLidas = 0;     
-
+*/
     
     fclose(fptrHuman);
-    // fclose(fptrChimp);
-    // fclose(fptrDog);
-*/
+    fclose(fptrChimp);
+    fclose(fptrDog);
+
     return 0;
 }
 

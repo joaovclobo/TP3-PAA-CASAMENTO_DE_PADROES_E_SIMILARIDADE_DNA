@@ -20,7 +20,7 @@ FILE* abreArquivo(char* nomeArquivo){
 
     FILE *fptr;
 
-    printf("\nAbrindo o arquivo: %s\n", nomeArquivo);
+    printf("\n\tAbrindo o arquivo: %s\n", nomeArquivo);
     
     fptr = fopen(nomeArquivo, "r");
 

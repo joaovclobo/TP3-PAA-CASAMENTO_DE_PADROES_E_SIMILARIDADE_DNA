@@ -144,3 +144,63 @@ long KMPAlgorithm(char* texto, char* padrao) {
 
    return ocorrencias;
 }
+
+long* contaFrequenciasBHMS(FILE* fptr, char* tipoDNA, int numPadroes, char** padroesSorteados){
+
+  printf("\tContando frequências do padrões Usando o algoritmo de:\tBHMS - No DNA:\t%s...\n", tipoDNA);
+
+  char* DNA = (char*) calloc(MAX_BUFFER, sizeof(char));
+
+  long* vetorFreq = (long*) calloc(numPadroes, sizeof(long));
+
+  while (!feof(fptr)){
+    fscanf(fptr, "%s", DNA);
+    
+    for (int i = 0; i < numPadroes; i++){
+
+    vetorFreq[i] += BMHS(DNA, padroesSorteados[i]);
+    }
+  }
+
+  return vetorFreq;
+}
+
+long* contaFrequenciasShiftAnd(FILE* fptr, char* tipoDNA, int numPadroes, char** padroesSorteados){
+
+  printf("\tContando frequências do padrões Usando o algoritmo de:\tShiftAnd - No DNA:\t%s...\n", tipoDNA);
+
+  char* DNA = (char*) calloc(MAX_BUFFER, sizeof(char));
+
+  long* vetorFreq = (long*) calloc(numPadroes, sizeof(long));
+
+  while (!feof(fptr)){
+    fscanf(fptr, "%s", DNA);
+    
+    for (int i = 0; i < numPadroes; i++){
+
+    vetorFreq[i] += ShiftAnd(DNA, padroesSorteados[i]);
+    }
+  }
+
+  return vetorFreq;
+}
+
+long* contaFrequenciasKMP(FILE* fptr, char* tipoDNA, int numPadroes, char** padroesSorteados){
+
+  printf("\tContando frequências do padrões Usando o algoritmo de:\tKMP - No DNA:\t%s...\n", tipoDNA);
+
+  char* DNA = (char*) calloc(MAX_BUFFER, sizeof(char));
+
+  long* vetorFreq = (long*) calloc(numPadroes, sizeof(long));
+
+  while (!feof(fptr)){
+    fscanf(fptr, "%s", DNA);
+    
+    for (int i = 0; i < numPadroes; i++){
+
+    vetorFreq[i] += KMPAlgorithm(DNA, padroesSorteados[i]);
+    }
+  }
+
+  return vetorFreq;
+}
