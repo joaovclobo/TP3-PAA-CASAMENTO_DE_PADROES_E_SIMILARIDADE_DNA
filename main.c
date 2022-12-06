@@ -17,18 +17,16 @@ int main(){
 
     //Variaveis de teste
         srand(1);
-        tamPadrao = 2; numPadroes = 4;
+        tamPadrao = 8; numPadroes = 4;
     
     cabecalhoMain();
 
-    //TODO - da pra melhorar
-
     /*------------------------------- Gera Produto Cartesiano -------------------------------*/
-    tamProdCartesiano = pow(4, tamPadrao);
+    tamProdCartesiano = pow(TAMBASES, tamPadrao);
 	char** prodCartesiano = geraProdCartesiano(tamPadrao, tamProdCartesiano);
 
-    printf("\n\tProduto cartesiano:\t");
-    imprimeVetString(tamProdCartesiano, tamPadrao + 1, prodCartesiano);
+    // printf("\n\tProduto cartesiano:\t");
+    // imprimeVetString(tamProdCartesiano, tamPadrao + 1, prodCartesiano);
 
 
     /*------------------------------- Sorteia Padrões -------------------------------*/
@@ -41,8 +39,10 @@ int main(){
 
     /*----  Calcula Frequencias Humano ----*/
     begin = clock();
+
     FILE *fptrHuman = abreArquivo("./ArquivosDNA/human.txt");
     long* freqsHuman = contaFrequenciasBHMS(fptrHuman, "Humano", numPadroes, padroesSorteados);
+
     end = clock();
 
     printf("\tVetor freqs Human: "); imprimeVetLong(numPadroes, freqsHuman); 
@@ -51,8 +51,10 @@ int main(){
 
     /*----  Calcula Frequencias Cachoro ----*/
     begin = clock();
+
     FILE *fptrDog = abreArquivo("./ArquivosDNA/dog.txt");
     long* freqsDog = contaFrequenciasBHMS(fptrDog, "Cachoro", numPadroes, padroesSorteados);
+
     end = clock();
 
     printf("\tVetor freqs Dog: "); imprimeVetLong(numPadroes, freqsDog); 
@@ -61,8 +63,10 @@ int main(){
     
     /*----  Calcula Frequencias Chimpanzé ----*/
     begin = clock();
+
     FILE *fptrChimp = abreArquivo("./ArquivosDNA/chimpanzee.txt");
     long* freqsChimp = contaFrequenciasBHMS(fptrChimp, "Chimpanzé", numPadroes, padroesSorteados);
+
     end = clock();
 
     printf("\tVetor freqs Chimpanzee: "); imprimeVetLong(numPadroes, freqsChimp); 

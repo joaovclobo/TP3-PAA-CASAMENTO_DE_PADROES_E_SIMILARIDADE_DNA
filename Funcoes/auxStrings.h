@@ -6,6 +6,8 @@
 #define MAX_BUFFER 100000
 #define MIN_BUFFER 50
 #define MAX_PADROES 10
+#define BASES "ATCG"
+#define TAMBASES 4
 
 char** iniciaVetString(int tamVetor, int tamString);
 void imprimeVetString(int tamVetor, int tamString, char** vetor);
