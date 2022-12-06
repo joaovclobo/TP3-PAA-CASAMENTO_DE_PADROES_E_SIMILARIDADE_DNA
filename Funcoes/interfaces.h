@@ -1,4 +1,5 @@
 #include "auxStrings.h"
 
 void cabecalhoMain();
-FILE* abreArquivo(char* nomeArquivo);
+FILE* abreArquivoRead(char* nomeArquivo);
+FILE* abreArquivoAppend(char* nomeArquivo);

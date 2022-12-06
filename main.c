@@ -2,78 +2,143 @@
 #include "./Funcoes/relatorio.h"
 #include "./Funcoes/similaridade.h"
 
+int main(int argc, char* argv[]){
 
-int main(){
+    cabecalhoMain();
 
-    //Variaveis da main
     double time_spent = 0.0;
-    clock_t begin;
-    clock_t end;
+    clock_t begin, beginTotal;
+    clock_t end, endTotal;
 
-    int tamProdCartesiano, tamPadrao, numPadroes;
+    long* freqsHuman;
+    long* freqsDog;
+    long* freqsChimp;
+
+    int tamProdCartesiano, tamPadrao, numPadroes, numTentativas;
+    short tipoAlg = (short) atoi(argv[1]);
 
     time_t tempo;
     srand((time(&tempo)));
 
-    //Variaveis de teste
-        srand(1);
-        tamPadrao = 8; numPadroes = 4;
-    
-    cabecalhoMain();
+    FILE* fptrLog = abreArquivoAppend("./Arquivos/simulacoesLog.txt");
+    FILE* fptrHuman = abreArquivoRead("./Arquivos/human.txt");
+    FILE* fptrDog = abreArquivoRead("./Arquivos/dog.txt");
+    FILE* fptrChimp = abreArquivoRead("./Arquivos/chimpanzee.txt");
+
+                //Variaveis de teste
+                tamPadrao = 2; numPadroes = 4;
+                srand(1);
+
+
+    registraParametros(fptrLog, &tamPadrao, &numPadroes, &numTentativas);
 
     /*------------------------------- Gera Produto Cartesiano -------------------------------*/
     tamProdCartesiano = pow(TAMBASES, tamPadrao);
 	char** prodCartesiano = geraProdCartesiano(tamPadrao, tamProdCartesiano);
 
-    // printf("\n\tProduto cartesiano:\t");
-    // imprimeVetString(tamProdCartesiano, tamPadrao + 1, prodCartesiano);
-
-
     /*------------------------------- Sorteia Padrões -------------------------------*/
-    char** padroesSorteados = sorteiaPadroes(numPadroes, tamPadrao + 1, tamProdCartesiano, prodCartesiano);
 
-    printf("\n\tPadrões sorteados:\t");
-    imprimeVetString(numPadroes, tamPadrao + 1, padroesSorteados);
 
     /*------------------------------- Calcula Similaridades -------------------------------*/
 
-    /*----  Calcula Frequencias Humano ----*/
-    begin = clock();
+    for (int i = 0; i < numTentativas; i++){
+        
+        char** padroesSorteados = sorteiaPadroes(numPadroes, tamPadrao + 1, tamProdCartesiano, prodCartesiano);
 
-    FILE *fptrHuman = abreArquivo("./ArquivosDNA/human.txt");
-    long* freqsHuman = contaFrequenciasBHMS(fptrHuman, "Humano", numPadroes, padroesSorteados);
+        printf("\n\tPadrões sorteados:\t");
+        imprimeVetString(numPadroes, tamPadrao + 1, padroesSorteados);
 
-    end = clock();
+        beginTotal = clock();
 
-    printf("\tVetor freqs Human: "); imprimeVetLong(numPadroes, freqsHuman); 
-    mostraTempoGasto(end, begin);
+        /*----  Calcula Frequencias Humano ----*/
+        begin = clock();
+
+        long* freqsHuman;
+
+        switch (tipoAlg){
+            case 1:     freqsHuman = contaFrequenciasBHMS(fptrHuman, "Humano", numPadroes, padroesSorteados);
+            break;
+
+            case 2:     freqsHuman = contaFrequenciasShiftAnd(fptrHuman, "Humano", numPadroes, padroesSorteados);
+            break;
+
+            case 3:     freqsHuman = contaFrequenciasKMP(fptrHuman, "Humano", numPadroes, padroesSorteados);
+            break;
+        
+        default:
+            break;
+        }
+        end = clock();
+
+        printf("\tVetor freqs Human: "); imprimeVetLong(numPadroes, freqsHuman); 
+        mostraTempoGasto(end, begin);
+        registraTempo(fptrLog, end, begin, "", ",");
 
 
-    /*----  Calcula Frequencias Cachoro ----*/
-    begin = clock();
+        /*----  Calcula Frequencias Cachoro ----*/
+        begin = clock();
 
-    FILE *fptrDog = abreArquivo("./ArquivosDNA/dog.txt");
-    long* freqsDog = contaFrequenciasBHMS(fptrDog, "Cachoro", numPadroes, padroesSorteados);
+        long* freqsDog;
 
-    end = clock();
+        switch (tipoAlg){
+            case 1:     freqsDog = contaFrequenciasBHMS(fptrDog, "Cachoro", numPadroes, padroesSorteados);
+            break;
 
-    printf("\tVetor freqs Dog: "); imprimeVetLong(numPadroes, freqsDog); 
-    mostraTempoGasto(end, begin);
+            case 2:     freqsDog = contaFrequenciasShiftAnd(fptrDog, "Cachoro", numPadroes, padroesSorteados);
+            break;
 
-    
-    /*----  Calcula Frequencias Chimpanzé ----*/
-    begin = clock();
+            case 3:     freqsDog = contaFrequenciasKMP(fptrDog, "Cachoro", numPadroes, padroesSorteados);
+            break;
+        
+        default:
+            break;
+        }
+        end = clock();
 
-    FILE *fptrChimp = abreArquivo("./ArquivosDNA/chimpanzee.txt");
-    long* freqsChimp = contaFrequenciasBHMS(fptrChimp, "Chimpanzé", numPadroes, padroesSorteados);
+        printf("\tVetor freqs Dog: "); imprimeVetLong(numPadroes, freqsDog); 
+        mostraTempoGasto(end, begin);
+        registraTempo(fptrLog, end, begin, "", ",");
 
-    end = clock();
+        
+        /*----  Calcula Frequencias Chimpanzé ----*/
+        begin = clock();
 
-    printf("\tVetor freqs Chimpanzee: "); imprimeVetLong(numPadroes, freqsChimp); 
-    mostraTempoGasto(end, begin);
+        long* freqsChimp;
 
+        switch (tipoAlg){
+            case 1:     freqsChimp = contaFrequenciasBHMS(fptrChimp, "Chimpanzé", numPadroes, padroesSorteados);
+            break;
+
+            case 2:     freqsChimp = contaFrequenciasShiftAnd(fptrChimp, "Chimpanzé", numPadroes, padroesSorteados);
+            break;
+
+            case 3:     freqsChimp = contaFrequenciasKMP(fptrChimp, "Chimpanzé", numPadroes, padroesSorteados);
+            break;
+        
+        default:
+            break;
+        }
+        end = clock();
+
+        endTotal = clock();
+
+        printf("\tVetor freqs Chimpanzee: "); imprimeVetLong(numPadroes, freqsChimp); 
+        mostraTempoGasto(end, begin);
+        registraTempo(fptrLog, end, begin, "", "\n");
+
+        registraTempo(fptrLog, endTotal, beginTotal, "", "\n");
+
+        free(freqsHuman);
+        free(freqsDog);
+        free(freqsChimp);
+
+    }
+
+    //TODO - Coloca calculo de similaridade
 
     /*------------------------------- Fecha os arquivos -------------------------------*/
+    
+    fclose(fptrLog);
     fclose(fptrHuman);
     fclose(fptrChimp);
     fclose(fptrDog);

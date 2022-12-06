@@ -147,7 +147,7 @@ long KMPAlgorithm(char* texto, char* padrao) {
 
 long* contaFrequenciasBHMS(FILE* fptr, char* tipoDNA, int numPadroes, char** padroesSorteados){
 
-  printf("\tContando frequências do padrões Usando o algoritmo de:\tBHMS - No DNA:\t%s...\n", tipoDNA);
+  printf("\tContando frequências do padrões usando o algoritmo de:\tBHMS - No DNA:\t%s...\n", tipoDNA);
 
   char* DNA = (char*) calloc(MAX_BUFFER, sizeof(char));
 
@@ -167,7 +167,7 @@ long* contaFrequenciasBHMS(FILE* fptr, char* tipoDNA, int numPadroes, char** pad
 
 long* contaFrequenciasShiftAnd(FILE* fptr, char* tipoDNA, int numPadroes, char** padroesSorteados){
 
-  printf("\tContando frequências do padrões Usando o algoritmo de:\tShiftAnd - No DNA:\t%s...\n", tipoDNA);
+  printf("\tContando frequências do padrões usando o algoritmo de:\tShiftAnd - No DNA:\t%s...\n", tipoDNA);
 
   char* DNA = (char*) calloc(MAX_BUFFER, sizeof(char));
 
@@ -187,7 +187,7 @@ long* contaFrequenciasShiftAnd(FILE* fptr, char* tipoDNA, int numPadroes, char**
 
 long* contaFrequenciasKMP(FILE* fptr, char* tipoDNA, int numPadroes, char** padroesSorteados){
 
-  printf("\tContando frequências do padrões Usando o algoritmo de:\tKMP - No DNA:\t%s...\n", tipoDNA);
+  printf("\tContando frequências do padrões usando o algoritmo de:\tKMP - No DNA:\t%s...\n", tipoDNA);
 
   char* DNA = (char*) calloc(MAX_BUFFER, sizeof(char));
 
