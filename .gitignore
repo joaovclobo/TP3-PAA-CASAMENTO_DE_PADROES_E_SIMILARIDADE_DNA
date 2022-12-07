@@ -2,6 +2,9 @@
 Main
 .idea
 
+#Test files
+simulacoesLog.txt
+
 # Prerequisites
 *.d
 

@@ -69,7 +69,7 @@ int main(int argc, char* argv[]){
         }
         end = clock();
 
-        printf("\tVetor freqs Human: "); imprimeVetLong(numPadroes, freqsHuman); 
+        printf("\tVetor freqs Human: "); imprimeVetLong(numPadroes, freqsHuman); putchar('\n');
         // mostraTempoGasto(end, begin);
         registraTempo(fptrLog, end, begin, "", ",");
 
@@ -92,7 +92,7 @@ int main(int argc, char* argv[]){
         }
         end = clock();
 
-        printf("\tVetor freqs Dog: "); imprimeVetLong(numPadroes, freqsDog); 
+        printf("\tVetor freqs Dog: "); imprimeVetLong(numPadroes, freqsDog); putchar('\n');
         // mostraTempoGasto(end, begin);
         registraTempo(fptrLog, end, begin, "", ",");
 
@@ -117,7 +117,7 @@ int main(int argc, char* argv[]){
 
         endTotal = clock();
 
-        printf("\tVetor freqs Chimpanzee: "); imprimeVetLong(numPadroes, freqsChimp); 
+        printf("\tVetor freqs Chimpanzee: "); imprimeVetLong(numPadroes, freqsChimp); putchar('\n');
         // mostraTempoGasto(end, begin);
         registraTempo(fptrLog, end, begin, "", "\n");
 
