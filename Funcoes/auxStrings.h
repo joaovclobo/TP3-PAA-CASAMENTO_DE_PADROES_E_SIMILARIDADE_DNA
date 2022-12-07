@@ -14,5 +14,7 @@ void imprimeVetString(int tamVetor, int tamString, char** vetor);
 void imprimeVetLong(long tamVetor, long* vetor);
 
 int compare (const void * a, const void * b);
+char *itoa (int value, char *result, int base);
+
 void geraProdCartesianoRecur (char *str, char* data, int last, int index, int* possProdCar, char** prodCartesiano);
 char** geraProdCartesiano(int tamPadrao, int tamProdCartesiano);

@@ -15,39 +15,3 @@ void cabecalhoMain(){
 |\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\n\
 |===============================================================================================================|\n\n");
 }
-
-FILE* abreArquivoRead(char* nomeArquivo){
-
-    FILE *fptr;
-
-    printf("\n\tAbrindo o arquivo: %s\n", nomeArquivo);
-    
-    fptr = fopen(nomeArquivo, "r");
-
-    if (fptr == NULL){
-        printf("\nERRO: Arquivo não encontrado!\nPor favor, insira um arquivo válido!\n");
-        return NULL;
-
-    } else{
-        return fptr;
-
-    }
-}
-
-FILE* abreArquivoAppend(char* nomeArquivo){
-
-    FILE *fptr;
-
-    printf("\n\tAbrindo o arquivo: %s\n", nomeArquivo);
-    
-    fptr = fopen(nomeArquivo, "a");
-
-    if (fptr == NULL){
-        printf("\nERRO: Arquivo não encontrado!\nPor favor, insira um arquivo válido!\n");
-        return NULL;
-
-    } else{
-        return fptr;
-
-    }
-}

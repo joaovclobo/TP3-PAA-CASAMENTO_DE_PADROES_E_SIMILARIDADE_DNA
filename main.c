@@ -20,14 +20,14 @@ int main(int argc, char* argv[]){
     time_t tempo;
     srand((time(&tempo)));
 
-    FILE* fptrLog = abreArquivoAppend("./Arquivos/simulacoesLog.txt");
-
                 //Variaveis de teste
-                tamPadrao = 2; numPadroes = 4;
-                srand(1);
+                // tamPadrao = 2; numPadroes = 4;
+                // srand(1);
 
+    FILE* fptrSimulacoes = abreArquivoAppend("./Arquivos/similaridades.csv");
+    FILE* fptrTempos = abreArquivoAppend("./Arquivos/tempos.csv");
 
-    registraParametros(fptrLog, &tamPadrao, &numPadroes, &numTentativas);
+    registraParametros(&tamPadrao, &numPadroes, &numTentativas);
 
     /*------------------------------- Gera Produto Cartesiano -------------------------------*/
     tamProdCartesiano = pow(TAMBASES, tamPadrao);
@@ -52,7 +52,6 @@ int main(int argc, char* argv[]){
         beginTotal = clock();
 
         /*----  Calcula Frequencias Humano ----*/
-        begin = clock();
 
         switch (tipoAlg){
             case 1:     freqsHuman = contaFrequenciasBHMS(fptrHuman, "Humano", numPadroes, padroesSorteados);
@@ -67,15 +66,9 @@ int main(int argc, char* argv[]){
         default:
             break;
         }
-        end = clock();
-
         printf("\tVetor freqs Human: "); imprimeVetLong(numPadroes, freqsHuman); putchar('\n');
-        // mostraTempoGasto(end, begin);
-        registraTempo(fptrLog, end, begin, "", ",");
-
 
         /*----  Calcula Frequencias Cachoro ----*/
-        begin = clock();
 
         switch (tipoAlg){
             case 1:     freqsDog = contaFrequenciasBHMS(fptrDog, "Cachoro", numPadroes, padroesSorteados);
@@ -90,15 +83,10 @@ int main(int argc, char* argv[]){
         default:
             break;
         }
-        end = clock();
-
         printf("\tVetor freqs Dog: "); imprimeVetLong(numPadroes, freqsDog); putchar('\n');
-        // mostraTempoGasto(end, begin);
-        registraTempo(fptrLog, end, begin, "", ",");
 
         
         /*----  Calcula Frequencias Chimpanzé ----*/
-        begin = clock();
 
         switch (tipoAlg){
             case 1:     freqsChimp = contaFrequenciasBHMS(fptrChimp, "Chimpanzé", numPadroes, padroesSorteados);
@@ -113,15 +101,13 @@ int main(int argc, char* argv[]){
         default:
             break;
         }
-        end = clock();
 
         endTotal = clock();
 
         printf("\tVetor freqs Chimpanzee: "); imprimeVetLong(numPadroes, freqsChimp); putchar('\n');
-        // mostraTempoGasto(end, begin);
-        registraTempo(fptrLog, end, begin, "", "\n");
 
-        registraTempo(fptrLog, endTotal, beginTotal, "", "\n");
+        //TODO - mudar para calcula o tempo médio
+        registraTempo(fptrTempos, endTotal, beginTotal);
 
         //TODO talvez pode ficar em outro lugar
         
@@ -135,11 +121,14 @@ int main(int argc, char* argv[]){
 
     //TODO - Coloca calculo de similaridade
 
-
     }
 
+    fprintf(fptrSimulacoes, "%d %d,%d,%d,\n", tipoAlg, tamPadrao, numPadroes, numTentativas);
+    //Calculo e preenchimento das médias
+    //Preenchimento do tempo em outro arquivo
 
-    fclose(fptrLog);
+    fclose(fptrSimulacoes);
+    fclose(fptrTempos);
 
     return 0;
 }
