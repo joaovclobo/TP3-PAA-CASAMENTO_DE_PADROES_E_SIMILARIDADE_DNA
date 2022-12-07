@@ -2,8 +2,10 @@
 Main
 .idea
 
-#Test files
+#Files
 simulacoesLog.txt
+relatorio.*
+
 
 # Prerequisites
 *.d

@@ -11,10 +11,12 @@
 
 char** iniciaVetString(int tamVetor, int tamString);
 void imprimeVetString(int tamVetor, int tamString, char** vetor);
-void imprimeVetLong(long tamVetor, long* vetor);
+void imprimeVetUInt(int tamVetor, unsigned int* vetor);
 
-int compare (const void * a, const void * b);
-char *itoa (int value, char *result, int base);
+int compare(const void * a, const void * b);
+char *itoa(int value, char *result, int base);
 
-void geraProdCartesianoRecur (char *str, char* data, int last, int index, int* possProdCar, char** prodCartesiano);
+//TODO - verificar esta e outras funçẽos se estão sendo usadas e mudar o nome desse arquivo
+void geraProdCartesianoRecur(char *str, char* data, int last, int index, int* possProdCar, char** prodCartesiano);
 char** geraProdCartesiano(int tamPadrao, int tamProdCartesiano);
+double calculaMediaDouble(int tamVetor, double* vetor);

@@ -1,3 +1,8 @@
-Tamanho do Padrao,Numero de Padroes,Numero de Tentativas,Similaridade HxC,Similaridade HxD,Similaridade CxD
-4,6,1000,0.84651613,0.9795695662,0.751684626584563
-4,4,5,
+Algoritimo,Tamanho do Padrao,Numero de Padroes,Numero de Tentativas,Similaridade HxC,Similaridade HxD,Similaridade CxD
+1,2,16,1,4.036553,2.187792,2.056376
+2,2,16,1,0.788656,0.908842,0.678050
+3,2,16,1,0.788656,0.908842,0.678050
+1,2,16,1,1.914370,1.044821,2.869747
+1,2,16,1,7.316665,1.836059,0.763157
+2,2,16,1,1.914370,1.044821,2.869747
+3,2,16,1,0.902440,0.381287,0.466522

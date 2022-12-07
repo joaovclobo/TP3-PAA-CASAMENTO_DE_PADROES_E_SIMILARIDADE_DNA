@@ -18,9 +18,9 @@ void imprimeVetString(int tamVetor, int tamString, char** vetor){
     putchar('\n');
 }
 
-void imprimeVetLong(long tamVetor, long* vetor){
+void imprimeVetUInt(int tamVetor, unsigned int* vetor){
 	for (int i = 0; i < tamVetor; i++){
-		printf("%ld ", vetor[i]);
+		printf("%u ", vetor[i]);
 	}
     putchar('\n');
 }
@@ -110,4 +110,15 @@ char *itoa (int value, char *result, int base){
         *ptr1++ = tmp_char;
     }
     return result;
+}
+
+double calculaMediaDouble(int tamVetor, double* vetor){
+    double soma = 0;
+
+    for (int i = 0; i < tamVetor; i++){
+
+        soma += vetor[i];
+    }
+    
+    return soma/tamVetor;
 }

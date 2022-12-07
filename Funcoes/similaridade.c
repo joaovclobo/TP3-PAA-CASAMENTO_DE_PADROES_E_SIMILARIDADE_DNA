@@ -39,41 +39,44 @@ int possJahSorteada(int possRandon, int numPadroesSorteados, int* possSorteadas)
     return 0;
 }
 
-long BMHS(char* texto, char* padrao){
-  long i, j, k, d[MAX_BUFFER + 1], ocorrencias = 0;
-  long tamTexto = strlen(texto), tamPadrao = strlen(padrao);
+unsigned int BMHS(char* texto, char* padrao){
+    long i, j, k, d[MAX_BUFFER + 1];
+    long tamTexto = strlen(texto), tamPadrao = strlen(padrao);
 
-  for (j = 0; j <= MAX_BUFFER; j++)  {
-    d[j] = tamPadrao + 1;
-  } 
+    unsigned int ocorrencias = 0;   
 
-  for (j = 1; j <= tamPadrao; j++){
-    d[padrao[j-1]] = tamPadrao - j + 1;
-  }
+    for (j = 0; j <= MAX_BUFFER; j++)  {
+        d[j] = tamPadrao + 1;
+    } 
 
-  i = tamPadrao;
-
- /*-- Pesquisa --*/
-  while (i <= tamTexto){
-    k = i; 
-    j = tamPadrao;
-    
-    while (texto[k-1] == padrao[j-1] && j > 0) {k--; j--; }
-    
-    if (j == 0){
-      ocorrencias++;
-
+    for (j = 1; j <= tamPadrao; j++){
+        d[padrao[j-1]] = tamPadrao - j + 1;
     }
 
-    i += d[texto[i]];
-  }
+    i = tamPadrao;
 
-  return ocorrencias;
+    /*-- Pesquisa --*/
+    while (i <= tamTexto){
+
+        k = i; 
+        j = tamPadrao;
+
+        while (texto[k-1] == padrao[j-1] && j > 0) {k--; j--; }
+
+        if (j == 0){
+
+            ocorrencias++;
+        }
+
+        i += d[texto[i]];
+    }
+
+    return ocorrencias;
 }
 
-long ShiftAnd(char* texto, char* padrao){
+unsigned int ShiftAnd(char* texto, char* padrao){
   long Masc[MAX_BUFFER], i, R = 0;
-  long ocorrencias = 0;
+  unsigned int ocorrencias = 0;
   long tamTexto = strlen(texto), tamPadrao = strlen(padrao);
 
   for (i = 0; i < MAX_BUFFER; i++){
@@ -116,11 +119,11 @@ void prefixSuffixArray(char* pat, int tamTexto, int* pps) {
    }
 }
 
-long KMPAlgorithm(char* texto, char* padrao) {
+unsigned int KMPAlgorithm(char* texto, char* padrao) {
    int tamTexto = strlen(padrao);
    int tamPadrao = strlen(texto);
    int pps[tamTexto];
-   long ocorrencias = 0;
+   unsigned int ocorrencias = 0;
 
    prefixSuffixArray(padrao, tamTexto, pps);
    int i = 0;
@@ -145,13 +148,13 @@ long KMPAlgorithm(char* texto, char* padrao) {
    return ocorrencias;
 }
 
-long* contaFrequenciasBHMS(FILE* fptr, char* tipoDNA, int numPadroes, char** padroesSorteados){
+unsigned int* contaFrequenciasBHMS(FILE* fptr, char* tipoDNA, int numPadroes, char** padroesSorteados){
 
   printf("\tContando frequências do padrões usando o algoritmo de:\tBHMS - No DNA:\t%s...\n", tipoDNA);
 
   char* DNA = (char*) calloc(MAX_BUFFER, sizeof(char));
 
-  long* vetorFreq = (long*) calloc(numPadroes, sizeof(long));
+  unsigned int* vetorFreq = (unsigned int*) calloc(numPadroes, sizeof(unsigned int));
 
   while (!feof(fptr)){
     fscanf(fptr, "%s", DNA);
@@ -165,13 +168,13 @@ long* contaFrequenciasBHMS(FILE* fptr, char* tipoDNA, int numPadroes, char** pad
   return vetorFreq;
 }
 
-long* contaFrequenciasShiftAnd(FILE* fptr, char* tipoDNA, int numPadroes, char** padroesSorteados){
+unsigned int* contaFrequenciasShiftAnd(FILE* fptr, char* tipoDNA, int numPadroes, char** padroesSorteados){
 
   printf("\tContando frequências do padrões usando o algoritmo de:\tShiftAnd - No DNA:\t%s...\n", tipoDNA);
 
   char* DNA = (char*) calloc(MAX_BUFFER, sizeof(char));
 
-  long* vetorFreq = (long*) calloc(numPadroes, sizeof(long));
+  unsigned int* vetorFreq = (unsigned int*) calloc(numPadroes, sizeof(unsigned int));
 
   while (!feof(fptr)){
     fscanf(fptr, "%s", DNA);
@@ -185,13 +188,13 @@ long* contaFrequenciasShiftAnd(FILE* fptr, char* tipoDNA, int numPadroes, char**
   return vetorFreq;
 }
 
-long* contaFrequenciasKMP(FILE* fptr, char* tipoDNA, int numPadroes, char** padroesSorteados){
+unsigned int* contaFrequenciasKMP(FILE* fptr, char* tipoDNA, int numPadroes, char** padroesSorteados){
 
   printf("\tContando frequências do padrões usando o algoritmo de:\tKMP - No DNA:\t%s...\n", tipoDNA);
 
   char* DNA = (char*) calloc(MAX_BUFFER, sizeof(char));
 
-  long* vetorFreq = (long*) calloc(numPadroes, sizeof(long));
+  unsigned int* vetorFreq = (unsigned int*) calloc(numPadroes, sizeof(unsigned int));
 
   while (!feof(fptr)){
     fscanf(fptr, "%s", DNA);
@@ -204,3 +207,18 @@ long* contaFrequenciasKMP(FILE* fptr, char* tipoDNA, int numPadroes, char** padr
 
   return vetorFreq;
 }
+
+double similaridadeCos(unsigned int* freqsDNA1, unsigned int* freqsDNA2, int numTentativas){
+
+    unsigned long numerador = 0, denominadorA = 0, denominadorB = 0;
+
+    for (int i = 0; i < numTentativas; i++){
+        numerador += freqsDNA1[i] * freqsDNA2[i];
+        denominadorA += freqsDNA1[i] * freqsDNA1[i];
+        denominadorB += freqsDNA2[i] * freqsDNA2[i];
+    }
+
+    return numerador/(sqrt(denominadorA) * sqrt(denominadorB));
+}
+
+

@@ -1,3 +1,4 @@
+//TODO - verificar funções que não estaão sendo usadas
 #include "./Funcoes/interfaces.h"
 #include "./Funcoes/relatorio.h"
 #include "./Funcoes/similaridade.h"
@@ -6,13 +7,12 @@ int main(int argc, char* argv[]){
 
     cabecalhoMain();
 
-    double time_spent = 0.0;
-    clock_t begin, beginTotal;
-    clock_t end, endTotal;
+    clock_t begin;
+    clock_t end;
 
-    long* freqsHuman;
-    long* freqsDog;
-    long* freqsChimp;
+    unsigned int* freqsHuman;
+    unsigned int* freqsDog;
+    unsigned int* freqsChimp;
 
     int tamProdCartesiano, tamPadrao, numPadroes, numTentativas;
     short tipoAlg = (short) atoi(argv[1]);
@@ -20,39 +20,36 @@ int main(int argc, char* argv[]){
     time_t tempo;
     srand((time(&tempo)));
 
-                //Variaveis de teste
-                // tamPadrao = 2; numPadroes = 4;
-                // srand(1);
+    recebeParametros(&tamPadrao, &numPadroes, &numTentativas);
 
-    FILE* fptrSimulacoes = abreArquivoAppend("./Arquivos/similaridades.csv");
-    FILE* fptrTempos = abreArquivoAppend("./Arquivos/tempos.csv");
+    double* similaridadesHxC = (double*) calloc(numTentativas, sizeof(double));
+    double* similaridadesHxD = (double*) calloc(numTentativas, sizeof(double));
+    double* similaridadesCxD = (double*) calloc(numTentativas, sizeof(double));
+    double* tempos = (double*) calloc(numTentativas, sizeof(double));
 
-    registraParametros(&tamPadrao, &numPadroes, &numTentativas);
 
     /*------------------------------- Gera Produto Cartesiano -------------------------------*/
     tamProdCartesiano = pow(TAMBASES, tamPadrao);
 	char** prodCartesiano = geraProdCartesiano(tamPadrao, tamProdCartesiano);
-
-    /*------------------------------- Sorteia Padrões -------------------------------*/
-
+    
 
     /*------------------------------- Calcula Similaridades -------------------------------*/
-
     for (int i = 0; i < numTentativas; i++){
         
+        /*------------------------------- Sorteia Padrões -------------------------------*/
         char** padroesSorteados = sorteiaPadroes(numPadroes, tamPadrao + 1, tamProdCartesiano, prodCartesiano);
+
+        putchar('\n');
 
         FILE* fptrHuman = abreArquivoRead("./Arquivos/human.txt");
         FILE* fptrDog = abreArquivoRead("./Arquivos/dog.txt");
         FILE* fptrChimp = abreArquivoRead("./Arquivos/chimpanzee.txt");
 
-        printf("\n\tPadrões sorteados:\t");
-        imprimeVetString(numPadroes, tamPadrao + 1, padroesSorteados);
+        putchar('\n');
 
-        beginTotal = clock();
+        begin = clock();
 
         /*----  Calcula Frequencias Humano ----*/
-
         switch (tipoAlg){
             case 1:     freqsHuman = contaFrequenciasBHMS(fptrHuman, "Humano", numPadroes, padroesSorteados);
             break;
@@ -66,10 +63,8 @@ int main(int argc, char* argv[]){
         default:
             break;
         }
-        printf("\tVetor freqs Human: "); imprimeVetLong(numPadroes, freqsHuman); putchar('\n');
 
         /*----  Calcula Frequencias Cachoro ----*/
-
         switch (tipoAlg){
             case 1:     freqsDog = contaFrequenciasBHMS(fptrDog, "Cachoro", numPadroes, padroesSorteados);
             break;
@@ -83,11 +78,8 @@ int main(int argc, char* argv[]){
         default:
             break;
         }
-        printf("\tVetor freqs Dog: "); imprimeVetLong(numPadroes, freqsDog); putchar('\n');
-
         
         /*----  Calcula Frequencias Chimpanzé ----*/
-
         switch (tipoAlg){
             case 1:     freqsChimp = contaFrequenciasBHMS(fptrChimp, "Chimpanzé", numPadroes, padroesSorteados);
             break;
@@ -102,33 +94,28 @@ int main(int argc, char* argv[]){
             break;
         }
 
-        endTotal = clock();
+        end = clock();
 
-        printf("\tVetor freqs Chimpanzee: "); imprimeVetLong(numPadroes, freqsChimp); putchar('\n');
+        similaridadesHxC[i] = similaridadeCos(freqsHuman, freqsChimp, numTentativas);
+        similaridadesHxD[i] = similaridadeCos(freqsHuman, freqsDog, numTentativas);
+        similaridadesCxD[i] = similaridadeCos(freqsChimp, freqsDog, numTentativas);
+        tempos[i] = (double)(end - begin) / CLOCKS_PER_SEC;
 
-        //TODO - mudar para calcula o tempo médio
-        registraTempo(fptrTempos, endTotal, beginTotal);
+        mostraTempoGasto(end, begin);
 
-        //TODO talvez pode ficar em outro lugar
-        
         fclose(fptrHuman);
-        fclose(fptrChimp);
         fclose(fptrDog);
+        fclose(fptrChimp);
         
         free(freqsHuman);
         free(freqsDog);
         free(freqsChimp);
 
-    //TODO - Coloca calculo de similaridade
-
     }
-
-    fprintf(fptrSimulacoes, "%d %d,%d,%d,\n", tipoAlg, tamPadrao, numPadroes, numTentativas);
-    //Calculo e preenchimento das médias
-    //Preenchimento do tempo em outro arquivo
-
-    fclose(fptrSimulacoes);
-    fclose(fptrTempos);
+    
+    /*------------------------------- Escreve os dados da simulação nos respectivos arquivos -------------------------------*/
+    registraDados(tipoAlg, tamPadrao, numPadroes, numTentativas, tempos, similaridadesHxC, similaridadesHxD, similaridadesCxD);
+    putchar('\n');
 
     return 0;
 }
