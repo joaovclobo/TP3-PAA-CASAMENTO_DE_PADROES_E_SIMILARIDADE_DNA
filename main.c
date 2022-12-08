@@ -17,8 +17,7 @@ int main(int argc, char* argv[]){
     short tipoAlg = (short) atoi(argv[1]);
 
     time_t tempo;
-    // srand((time(&tempo)));
-    srand(1);
+    srand((time(&tempo)));
 
     recebeParametros(&tamPadrao, &numPadroes, &numTentativas);
 
@@ -100,9 +99,6 @@ int main(int argc, char* argv[]){
         similaridadesHxD[i] = similaridadeCos(freqsHuman, freqsDog, numPadroes);
         similaridadesCxD[i] = similaridadeCos(freqsChimp, freqsDog, numPadroes);
         
-        printf("\n Similaridades %lf ", similaridadesHxC[i]);
-        printf("%lf ", similaridadesHxD[i]);
-        printf("%lf \n", similaridadesCxD[i]);
         tempos[i] = (double)(end - begin) / CLOCKS_PER_SEC;
 
         mostraTempoGasto(end, begin);
