@@ -208,11 +208,11 @@ unsigned int* contaFrequenciasKMP(FILE* fptr, char* tipoDNA, int numPadroes, cha
   return vetorFreq;
 }
 
-double similaridadeCos(unsigned int* freqsDNA1, unsigned int* freqsDNA2, int numTentativas){
+double similaridadeCos(unsigned int* freqsDNA1, unsigned int* freqsDNA2, int numPadroes){
 
     unsigned long numerador = 0, denominadorA = 0, denominadorB = 0;
 
-    for (int i = 0; i < numTentativas; i++){
+    for (int i = 0; i < numPadroes; i++){
         numerador += freqsDNA1[i] * freqsDNA2[i];
         denominadorA += freqsDNA1[i] * freqsDNA1[i];
         denominadorB += freqsDNA2[i] * freqsDNA2[i];

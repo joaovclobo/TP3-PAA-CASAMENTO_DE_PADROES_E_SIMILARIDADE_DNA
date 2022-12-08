@@ -1,6 +1,5 @@
 //TODO - verificar funções que não estaão sendo usadas
 #include "./Funcoes/interfaces.h"
-#include "./Funcoes/relatorio.h"
 #include "./Funcoes/similaridade.h"
 
 int main(int argc, char* argv[]){
@@ -18,7 +17,8 @@ int main(int argc, char* argv[]){
     short tipoAlg = (short) atoi(argv[1]);
 
     time_t tempo;
-    srand((time(&tempo)));
+    // srand((time(&tempo)));
+    srand(1);
 
     recebeParametros(&tamPadrao, &numPadroes, &numTentativas);
 
@@ -96,9 +96,13 @@ int main(int argc, char* argv[]){
 
         end = clock();
 
-        similaridadesHxC[i] = similaridadeCos(freqsHuman, freqsChimp, numTentativas);
-        similaridadesHxD[i] = similaridadeCos(freqsHuman, freqsDog, numTentativas);
-        similaridadesCxD[i] = similaridadeCos(freqsChimp, freqsDog, numTentativas);
+        similaridadesHxC[i] = similaridadeCos(freqsHuman, freqsChimp, numPadroes);
+        similaridadesHxD[i] = similaridadeCos(freqsHuman, freqsDog, numPadroes);
+        similaridadesCxD[i] = similaridadeCos(freqsChimp, freqsDog, numPadroes);
+        
+        printf("\n Similaridades %lf ", similaridadesHxC[i]);
+        printf("%lf ", similaridadesHxD[i]);
+        printf("%lf \n", similaridadesCxD[i]);
         tempos[i] = (double)(end - begin) / CLOCKS_PER_SEC;
 
         mostraTempoGasto(end, begin);
