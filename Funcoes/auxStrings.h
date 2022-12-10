@@ -5,7 +5,7 @@
 #include <math.h>
 #define MAX_BUFFER 100000
 #define MIN_BUFFER 50
-#define MAX_PADROES 10
+#define MAX_PADROES 15
 #define BASES "ATCG"
 #define TAMBASES 4
 

@@ -18,7 +18,7 @@ void cabecalhoMain(){
 
 void recebeParametros(int* tamPadrao, int* numPadroes, int* numTentativas){
 
-    printf("\nQual o tamanho do padrão: ");
+    printf("\nQual o tamanho do padrão (Max: 13): ");
     scanf("%d", tamPadrao);
 
     printf("Número de padrões que serão sorteados (Max: %.lf): ", pow(TAMBASES, *tamPadrao));

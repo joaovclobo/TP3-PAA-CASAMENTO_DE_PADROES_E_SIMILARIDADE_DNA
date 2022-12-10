@@ -161,7 +161,7 @@ unsigned int* contaFrequenciasBHMS(FILE* fptr, char* tipoDNA, int numPadroes, ch
     
     for (int i = 0; i < numPadroes; i++){
 
-    vetorFreq[i] += BMHS(DNA, padroesSorteados[i]);
+      vetorFreq[i] += BMHS(DNA, padroesSorteados[i]);
     }
   }
 
@@ -181,7 +181,7 @@ unsigned int* contaFrequenciasShiftAnd(FILE* fptr, char* tipoDNA, int numPadroes
     
     for (int i = 0; i < numPadroes; i++){
 
-    vetorFreq[i] += ShiftAnd(DNA, padroesSorteados[i]);
+      vetorFreq[i] += ShiftAnd(DNA, padroesSorteados[i]);
     }
   }
 
@@ -201,7 +201,7 @@ unsigned int* contaFrequenciasKMP(FILE* fptr, char* tipoDNA, int numPadroes, cha
     
     for (int i = 0; i < numPadroes; i++){
 
-    vetorFreq[i] += KMPAlgorithm(DNA, padroesSorteados[i]);
+      vetorFreq[i] += KMPAlgorithm(DNA, padroesSorteados[i]);
     }
   }
 

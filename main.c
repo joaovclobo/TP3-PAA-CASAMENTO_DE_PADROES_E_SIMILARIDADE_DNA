@@ -37,7 +37,7 @@ int main(int argc, char* argv[]){
         
         /*------------------------------- Sorteia Padrões -------------------------------*/
         char** padroesSorteados = sorteiaPadroes(numPadroes, tamPadrao + 1, tamProdCartesiano, prodCartesiano);
-
+        
         putchar('\n');
 
         FILE* fptrHuman = abreArquivoRead("./Arquivos/human.txt");
