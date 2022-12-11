@@ -11,38 +11,7 @@ char** iniciaVetString(int tamVetor, int tamString){
     return vetor;
 }
 
-void imprimeVetString(int tamVetor, int tamString, char** vetor){
-	for (int i = 0; i < tamVetor; i++){
-		printf("%s ", vetor[i]);
-	}
-    putchar('\n');
-}
-
-void imprimeVetUInt(int tamVetor, unsigned int* vetor){
-	for (int i = 0; i < tamVetor; i++){
-		printf("%u ", vetor[i]);
-	}
-    putchar('\n');
-}
-
 //Funções importadas e adaptadas do GeeksforGeeks
-
-void geraProdCartesianoRecur (char *str, char* data, int last, int index, int* possProdCar, char** prodCartesiano){
-	int i, len = strlen(str);
-
-	for ( i=0; i<len; i++ )	{
-
-		data[index] = str[i] ;
-
-		if (index == last){
-            strcpy(prodCartesiano[*possProdCar], data);
-            (*possProdCar)++;
-        }
-		else{
-            geraProdCartesianoRecur (str, data, last, index+1, possProdCar, prodCartesiano);
-        }
-	}
-}
 
 char** geraProdCartesiano(int tamPadrao, int tamProdCartesiano){
         
@@ -82,10 +51,6 @@ char** geraProdCartesiano(int tamPadrao, int tamProdCartesiano){
     }
 
     return prodCartesiano;
-}
-
-int compare (const void * a, const void * b){
-	return ( *(char *)a - *(char *)b );
 }
 
 char *itoa (int value, char *result, int base){

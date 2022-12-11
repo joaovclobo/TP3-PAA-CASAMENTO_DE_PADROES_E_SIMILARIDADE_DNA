@@ -220,5 +220,3 @@ double similaridadeCos(unsigned int* freqsDNA1, unsigned int* freqsDNA2, int num
 
     return numerador/(sqrt(denominadorA) * sqrt(denominadorB));
 }
-
-

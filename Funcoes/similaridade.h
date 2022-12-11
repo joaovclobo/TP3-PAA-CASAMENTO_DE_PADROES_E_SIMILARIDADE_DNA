@@ -13,4 +13,3 @@ unsigned int* contaFrequenciasShiftAnd(FILE* fptr, char* tipoDNA, int numPadroes
 unsigned int* contaFrequenciasKMP(FILE* fptr, char* tipoDNA, int numPadroes, char** padroesSorteados);
 
 double similaridadeCos(unsigned int* freqsDNA1, unsigned int* freqsDNA2, int numPadroes);
-double calculaMediaUInt(int tamVetor, unsigned int* vetor);

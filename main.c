@@ -1,4 +1,3 @@
-//TODO - verificar funções que não estaão sendo usadas
 #include "./Funcoes/interfaces.h"
 #include "./Funcoes/similaridade.h"
 
@@ -38,7 +37,7 @@ int main(int argc, char* argv[]){
         /*------------------------------- Sorteia Padrões -------------------------------*/
         char** padroesSorteados = sorteiaPadroes(numPadroes, tamPadrao + 1, tamProdCartesiano, prodCartesiano);
         
-        putchar('\n');
+        printf("\n\tNúmero da tentativa %d\n\n", i);
 
         FILE* fptrHuman = abreArquivoRead("./Arquivos/human.txt");
         FILE* fptrDog = abreArquivoRead("./Arquivos/dog.txt");
